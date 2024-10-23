@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { debounce } from 'lodash';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -10,9 +11,32 @@ const Register = () => {
     email: true,
     password: true
   });
+  const [emailCheckMessage, setEmailCheckMessage] = useState('');
   const navigate = useNavigate();
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const checkEmailExists = debounce(async (email) => {
+    try {
+      const response = await axios.post('http://localhost:8080/member/check-email', { email });
+      if (response.data.exists) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: true
+        }));
+        setEmailCheckMessage('이미 사용 중인 이메일입니다.');
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: false
+        }));
+        setEmailCheckMessage('사용 가능한 이메일입니다.');
+      }
+    } catch (error) {
+      console.error('이메일 중복 확인 오류', error);
+      setEmailCheckMessage('이메일 확인 중 오류가 발생했습니다.');
+    }
+  }, 300); // 500ms 대기
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
@@ -23,11 +47,14 @@ const Register = () => {
         ...prevErrors,
         email: false
       }));
+      // 이메일 형식이 맞으면 중복 검사 실행
+      checkEmailExists(value);
     } else {
       setErrors((prevErrors) => ({
         ...prevErrors,
         email: true
       }));
+      setEmailCheckMessage('이메일 형식이 올바르지 않습니다.');
     }
   };
 
@@ -63,7 +90,7 @@ const Register = () => {
     if (errors.email || errors.password) return;
 
     try {
-      const response = await axios.post('http://localhost:3000/member/join', {
+      const response = await axios.post('http://localhost:8080/member/join', {
         name,
         email,
         password,
@@ -75,21 +102,19 @@ const Register = () => {
       }
     } catch (error) {
       console.error('회원가입 실패', error);
-      alert('회원가입에 실패했습니다.')
+      alert('회원가입에 실패했습니다.');
     }
   };
 
-
-
-  return(
+  return (
     <div>
       <h1>회원가입</h1>
       <form onSubmit={handleRegister}>
         <div>
           <label>닉네임 : </label>
           <input 
-            type = "text"
-            value = {name}
+            type="text"
+            value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
@@ -97,18 +122,18 @@ const Register = () => {
         <div>
           <label>이메일 : </label>
           <input 
-            type = "email"
-            value = {email}
+            type="email"
+            value={email}
             onChange={handleEmailChange}
             required
           />
-          {errors.email && email.length > 0 && <p>이메일 형식이 잘못되었습니다</p>}
+          {email.length > 0 && <p>{emailCheckMessage}</p>}
         </div>
         <div>
           <label>비밀번호 : </label>
           <input 
-            type = "password"
-            value = {password}
+            type="password"
+            value={password}
             onChange={handlePasswordChange}
             required
           />
