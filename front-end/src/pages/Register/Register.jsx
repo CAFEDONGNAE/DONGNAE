@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
 
@@ -18,7 +18,7 @@ const Register = () => {
 
   const checkEmailExists = debounce(async (email) => {
     try {
-      const response = await axios.post('http://localhost:8080/member/check-email', { email });
+      const response = await api.post('/member/join/email', { email });
       if (response.data.exists) {
         setErrors((prevErrors) => ({
           ...prevErrors,
@@ -90,7 +90,7 @@ const Register = () => {
     if (errors.email || errors.password) return;
 
     try {
-      const response = await axios.post('http://localhost:8080/member/join', {
+      const response = await api.post('/member/join', {
         name,
         email,
         password,
