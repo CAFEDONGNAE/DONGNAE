@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { debounce } from 'lodash';
 import mockApi from '../services/mockApi';
-import FriendList from './FriendList';
+import UserFinderCard from './UserFinderCard';
 
-const FriendFinder = () => {
+const UserFinder = () => {
   const [word, setWord] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [searchMessage, setSearchMessage] = useState('');
@@ -21,7 +21,7 @@ const FriendFinder = () => {
           console.log(users);
         } else {
           setSearchResults([]);
-          setSearchMessage('일치하는 사용자가 없습니다.')
+          setSearchMessage('일치하는 사용자가 없습니다.');
         }
       }
     } catch (error) {
@@ -44,23 +44,23 @@ const FriendFinder = () => {
 
   return (
     <div>
-      <h3>친구 찾기</h3>
+      <h3>닉네임으로 사용자 찾기</h3>
       <form>
         <input
           value={word}
           onChange={handleSearchChange}
         />
-        <section>
+      </form>
+      <section>
           <p>{ searchMessage }</p>
           <ul>
             {searchResults.map((user, index) => (
-                <FriendList key={index} user={user} />
+              <UserFinderCard key={index} user={user} searchQuery={word} />
             ))}
           </ul>
         </section>
-      </form>
     </div>
   );
 };
 
-export default FriendFinder;
+export default UserFinder;

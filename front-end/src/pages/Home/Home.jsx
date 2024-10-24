@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import useAuthStore from '../../store/authStore';
 import LogoutButton from '../../components/LogoutButton';
-import FriendFinder from '../../components/FriendFinder';
+import UserFinder from '../../components/UserFinder';
 
 const Home = () => {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
@@ -20,7 +20,7 @@ const Home = () => {
             <h3>안녕하세요, { userName }</h3>
             <Link to={`/user/${userId}`}>내 정보보기</Link>
             <LogoutButton />
-            <FriendFinder />
+            <UserFinder />
           </>
         ) : (
           <>
