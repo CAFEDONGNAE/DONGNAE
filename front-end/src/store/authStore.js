@@ -6,9 +6,10 @@ const useAuthStore = create(
     (set) => ({
       isLoggedIn: false,
       userName: null,
+      userId: null,
 
-      login: (userName) => set({ isLoggedIn: true, userName }),
-      logout: () => set({ isLoggedIn: false, userName: null }),
+      login: (userName, userId) => set({ isLoggedIn: true, userName, userId }),
+      logout: () => set({ isLoggedIn: false, userName: null, userId: null }),
     }),
     {
       name: 'auth-storage',

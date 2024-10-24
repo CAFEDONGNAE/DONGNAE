@@ -17,7 +17,7 @@ const Login = () => {
         password,
       });
       if (response.status === 200) {
-        login(response.data.name);
+        login(response.data.name, response.data.id);
         navigate('/');
       }
     } catch (error) {
