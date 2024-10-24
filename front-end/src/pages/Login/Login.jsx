@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
+import useAuthStore from '../../store/authStore';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-
+  const login = useAuthStore((state) => state.login);
+  
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -15,6 +17,7 @@ const Login = () => {
         password,
       });
       if (response.status === 200) {
+        login(response.data.name);
         navigate('/');
       }
     } catch (error) {

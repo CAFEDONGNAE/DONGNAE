@@ -1,16 +1,30 @@
 import { Link } from 'react-router-dom';
+import useAuthStore from '../../store/authStore';
+import LogoutButton from '../../components/LogoutButton';
 
 const Home = () => {
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const userName = useAuthStore((state) => state.userName);
+
   return (
     <>
       <div>
-        <h1>서비스의 이름이 들어가는 부분</h1>
-        <p>서비스에 대한 설명이 작성된 부분. 어쩌고 저쩌고 뭐라 써 있음</p>
+        <h1>카페동네</h1>
+        <p>서울 관악구 남부순환로 1600-1</p>
       </div>
-      <div>
-        <Link to="/login">로그인</Link>
-        <Link to="/register">회원가입</Link>
-      </div>
+      {
+        isLoggedIn ? (
+          <>
+            <h3>안녕하세요, { userName }</h3>
+            <LogoutButton />
+          </>
+        ) : (
+          <>
+            <Link to="/login">로그인</Link>
+            <Link to="/register">회원가입</Link>
+          </>
+        )
+      }
     </>
   );
 };
