@@ -45,13 +45,12 @@ export const handlers = [
     const existingUser = mockUsers.find((user) => user.email === email);
     if (existingUser) {
       return HttpResponse.json(
-        { exist: true, message: '이미 사용중인 이메일입니다' },
-        { status: 200 }
+        { message: '이미 사용중인 이메일입니다' },
+        { status: 409 }
       );
     }
 
     return HttpResponse.json(
-      { exist: false },
       { status: 200 }
     );
   }),
@@ -87,5 +86,28 @@ export const handlers = [
       { message: '로그아웃 성공' },
       { status: 200 }
     );
+  }),
+
+  http.post('http://localhost:5001/member/friend', async ({ request}) => {
+    const { name } = await request.json();
+
+    const matchingUsers = mockUsers.filter(user => user.name.toLowerCase().includes(name.toLowerCase()));
+
+    if (matchingUsers.length > 0) {
+      const userList = matchingUsers.map(user => ({
+        name: user.name,
+        email: user.email
+      }));
+
+      return HttpResponse.json(
+        { users: userList },
+        { status: 200 }
+      );
+    } else {
+      return HttpResponse.json(
+        { users: [] },
+        { status: 200 }
+      );
+    }
   })
 ];

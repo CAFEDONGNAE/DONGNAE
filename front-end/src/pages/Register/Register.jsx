@@ -20,13 +20,8 @@ const Register = () => {
   const checkEmailExists = debounce(async (email) => {
     try {
       const response = await mockApi.post('/member/join/email', { email });
-      if (response.data.exist) {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          email: true
-        }));
-        setEmailCheckMessage('이미 사용 중인 이메일입니다.');
-      } else {
+      
+      if (response.status === 200) {
         setErrors((prevErrors) => ({
           ...prevErrors,
           email: false
@@ -34,8 +29,28 @@ const Register = () => {
         setEmailCheckMessage('사용 가능한 이메일입니다.');
       }
     } catch (error) {
-      console.error('이메일 중복 확인 오류', error);
-      setEmailCheckMessage('이메일 확인 중 오류가 발생했습니다.');
+      if (error.response) {
+        if (error.response.status === 409) {
+          // 이메일 중복
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            email: true
+          }));
+          setEmailCheckMessage('이미 사용 중인 이메일입니다.');
+        } else if (error.response.status === 400) {
+          // 잘못된 요청 또는 통신 오류
+          console.error('잘못된 요청 또는 통신 오류:', error);
+          setEmailCheckMessage('잘못된 요청입니다. 이메일 형식을 확인하세요.');
+        } else {
+          // 기타 서버 오류
+          console.error('서버 오류:', error);
+          setEmailCheckMessage('서버에서 오류가 발생했습니다.');
+        }
+      } else {
+        // 네트워크 오류 또는 응답없음
+        console.error('네트워크 오류:', error);
+        setEmailCheckMessage('네트워크 오류가 발생했습니다. 다시 시도해 주세요.');
+      }
     }
   }, 300); // 500ms 대기
 
