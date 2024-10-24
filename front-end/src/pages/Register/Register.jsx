@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import api from '../../services/api';
+// import api from '../../services/api';
+import mockApi from '../../services/mockApi';
 import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
 
@@ -18,8 +19,8 @@ const Register = () => {
 
   const checkEmailExists = debounce(async (email) => {
     try {
-      const response = await api.post('/member/join/email', { email });
-      if (response.data.exists) {
+      const response = await mockApi.post('/member/join/email', { email });
+      if (response.data.exist) {
         setErrors((prevErrors) => ({
           ...prevErrors,
           email: true
@@ -90,7 +91,7 @@ const Register = () => {
     if (errors.email || errors.password) return;
 
     try {
-      const response = await api.post('/member/join', {
+      const response = await mockApi.post('/member/join', {
         name,
         email,
         password,

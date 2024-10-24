@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import api from '../services/api';
+// import api from '../services/api';
+import mockApi from '../services/mockApi';
 import useAuthStore from '../store/authStore';
 
 const LogoutButton = () => {
@@ -8,7 +9,7 @@ const LogoutButton = () => {
 
   const handleLogout = async () => {
     try {
-      await api.post('/member/logout');
+      await mockApi.post('/member/logout');
     } catch (err) {
       console.err('Logout failed:', err);
     } finally {

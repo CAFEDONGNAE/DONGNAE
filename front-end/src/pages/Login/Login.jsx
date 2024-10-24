@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../../services/api';
+// import api from '../../services/api';
+import mockApi from '../../services/mockApi';
 import useAuthStore from '../../store/authStore';
 
 const Login = () => {
@@ -12,7 +13,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post('/member/login', {
+      const response = await mockApi.post('/member/login', {
         email,
         password,
       });

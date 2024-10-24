@@ -12,7 +12,7 @@ const AuthRoutes = ({ element }) => {
   return element;
 };
 
-AuthRoutes.PropTypes = {
+AuthRoutes.propTypes = {
   element: PropTypes.element.isRequired,
 }
 

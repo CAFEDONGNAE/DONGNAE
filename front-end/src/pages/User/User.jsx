@@ -1,8 +1,8 @@
 import useAuthStore from "../../store/authStore";
-import { useParams  } from 'react-router-dom';
+// import { useParams  } from 'react-router-dom';
 
 const User = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
   const userName = useAuthStore((state) => state.userName);
 
   return (
