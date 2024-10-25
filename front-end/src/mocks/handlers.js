@@ -201,4 +201,16 @@ export const handlers = [
       { status: 200 }
     );
   }),
+
+  // 추천/친구 목록 불러오기
+  http.get('http://localhost:5001/members/profile', async () => {
+    const profile = {
+      name: 'node',
+      email: 'node@node.no'
+    }
+    return HttpResponse.json(
+      { member: profile },
+      { status: 200 }
+    );
+  }),
 ];
