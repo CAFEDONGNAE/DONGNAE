@@ -9,7 +9,7 @@ const LogoutButton = () => {
 
   const handleLogout = async () => {
     try {
-      await mockApi.post('/member/logout');
+      await mockApi.post('/members/logout');
     } catch (err) {
       console.err('Logout failed:', err);
     } finally {

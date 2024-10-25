@@ -19,7 +19,7 @@ const Register = () => {
 
   const checkEmailExists = debounce(async (email) => {
     try {
-      const response = await mockApi.post('/member/join/email', { email });
+      const response = await mockApi.post('/members/check-email', { email });
       
       if (response.status === 200) {
         setErrors((prevErrors) => ({
@@ -106,7 +106,7 @@ const Register = () => {
     if (errors.email || errors.password) return;
 
     try {
-      const response = await mockApi.post('/member/join', {
+      const response = await mockApi.post('/members/join', {
         name,
         email,
         password,

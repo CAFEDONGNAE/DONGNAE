@@ -10,7 +10,9 @@ const UserFinder = () => {
 
   const searchByName = debounce(async (name) => {
     try {
-      const response = await mockApi.post('/member/friend', { name });
+      const response = await mockApi.get('/members', {
+        params: { name }
+      });
 
       if (response.status === 200) {
         const users = response.data.users;
@@ -28,7 +30,7 @@ const UserFinder = () => {
       console.error('이름 검색 중 오류가 발생했습니다.', error);
       setSearchMessage('이름 검색 중 오류가 발생했습니다.');
     }
-  })
+  });
 
   const handleSearchChange = (e) => {
     const name = e.target.value;
@@ -40,7 +42,7 @@ const UserFinder = () => {
       setSearchResults([]);
       setSearchMessage('');
     }
-  }
+  };
 
   return (
     <div>

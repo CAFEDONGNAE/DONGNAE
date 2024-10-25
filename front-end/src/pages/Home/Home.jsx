@@ -6,7 +6,6 @@ import UserFinder from '../../components/UserFinder';
 const Home = () => {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const userName = useAuthStore((state) => state.userName);
-  const userId = useAuthStore((state) => state.userId);
 
   return (
     <>
@@ -18,7 +17,7 @@ const Home = () => {
         isLoggedIn ? (
           <>
             <h3>안녕하세요, { userName }</h3>
-            <Link to={`/user/${userId}`}>내 정보보기</Link>
+            <Link to="/profile">내 정보보기</Link>
             <LogoutButton />
             <UserFinder />
           </>

@@ -13,7 +13,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await mockApi.post('/member/login', {
+      const response = await mockApi.post('/members/login', {
         email,
         password,
       });
