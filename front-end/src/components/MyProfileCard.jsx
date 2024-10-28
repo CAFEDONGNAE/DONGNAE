@@ -8,7 +8,7 @@ const MyProfileCard = () => {
     try {
       const response = await mockApi.get('/members/profile');
 
-      if (response.sta === 200) {
+      if (response.status === 200) {
         console.log('내 프로필 불러오기 성공', response);
         setProfile((response.data.member));
       }
@@ -24,8 +24,8 @@ const MyProfileCard = () => {
   return (
     <div>
       <h3>내 프로필</h3>
-      <p>{profile.name}</p>
-      <p>{profile.email}</p>
+      <p>닉네임 : {profile.name}</p>
+      <p>이메일 : {profile.email}</p>
     </div>
   );
 }

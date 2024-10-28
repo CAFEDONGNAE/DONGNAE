@@ -1,20 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-// import api from '../services/api';
-import mockApi from '../services/mockApi';
-import useAuthStore from '../store/authStore';
+import { logoutApi } from '../services/authServices';
 
 const LogoutButton = () => {
   const navigate = useNavigate();
-  const logout = useAuthStore((state) => state.logout);
 
   const handleLogout = async () => {
-    try {
-      await mockApi.post('/members/logout');
-    } catch (err) {
-      console.err('Logout failed:', err);
-    } finally {
-      logout();
+    const logoutResult = await logoutApi();
+
+    if (logoutResult.success) {
       navigate('/');
+    } else {
+      alert('로그아웃 실패');
     }
   };
 

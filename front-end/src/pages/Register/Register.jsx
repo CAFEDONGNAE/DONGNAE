@@ -1,8 +1,7 @@
 import { useState } from 'react';
-// import api from '../../services/api';
-import mockApi from '../../services/mockApi';
 import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
+import { registerApi, loginApi, checkEmailApi } from '../../services/authServices';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -17,42 +16,24 @@ const Register = () => {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const checkEmailExists = debounce(async (email) => {
-    try {
-      const response = await mockApi.post('/members/check-email', { email });
-      
-      if (response.status === 200) {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          email: false
-        }));
-        setEmailCheckMessage('사용 가능한 이메일입니다.');
-      }
-    } catch (error) {
-      if (error.response) {
-        if (error.response.status === 409) {
-          // 이메일 중복
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            email: true
-          }));
-          setEmailCheckMessage('이미 사용 중인 이메일입니다.');
-        } else if (error.response.status === 400) {
-          // 잘못된 요청 또는 통신 오류
-          console.error('잘못된 요청 또는 통신 오류:', error);
-          setEmailCheckMessage('잘못된 요청입니다. 이메일 형식을 확인하세요.');
-        } else {
-          // 기타 서버 오류
-          console.error('서버 오류:', error);
-          setEmailCheckMessage('서버에서 오류가 발생했습니다.');
-        }
-      } else {
-        // 네트워크 오류 또는 응답없음
-        console.error('네트워크 오류:', error);
-        setEmailCheckMessage('네트워크 오류가 발생했습니다. 다시 시도해 주세요.');
-      }
+  // debounce 적용된 이메일 체크 함수
+  const debouncedCheckEmail = debounce(async (email) => {
+    const result = await checkEmailApi(email);
+
+    if (result.success) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: false
+      }));
+      setEmailCheckMessage(result.message);
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: true
+      }));
+      setEmailCheckMessage(result.message);
     }
-  }, 300); // 500ms 대기
+  }, 300); // 300ms 대기
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
@@ -64,7 +45,7 @@ const Register = () => {
         email: false
       }));
       // 이메일 형식이 맞으면 중복 검사 실행
-      checkEmailExists(value);
+      debouncedCheckEmail(value);
     } else {
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -105,20 +86,20 @@ const Register = () => {
 
     if (errors.email || errors.password) return;
 
-    try {
-      const response = await mockApi.post('/members/join', {
-        name,
-        email,
-        password,
-      });
+    const registerResult = await registerApi(name, email, password);
 
-      if (response.status === 201) {
-        console.log('회원가입 성공', response);
+    if (registerResult.success) {
+      console.log('회원가입 성공');
+      const loginResult = await loginApi(email, password);
+
+      if (loginResult.success) {
+        navigate('/');
+      } else {
+        alert('자동 로그인 실패. 로그인 페이지로 이동합니다.');
         navigate('/login');
       }
-    } catch (error) {
-      console.error('회원가입 실패', error);
-      alert('회원가입에 실패했습니다.');
+    } else {
+      alert('회원가입 실패');
     }
   };
 

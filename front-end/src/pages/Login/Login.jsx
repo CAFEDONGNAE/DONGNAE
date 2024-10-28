@@ -1,35 +1,26 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import api from '../../services/api';
-import mockApi from '../../services/mockApi';
-import useAuthStore from '../../store/authStore';
+import { loginApi } from '../../services/authServices';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const login = useAuthStore((state) => state.login);
   
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const response = await mockApi.post('/members/login', {
-        email,
-        password,
-      });
-      if (response.status === 200) {
-        login(response.data.name, response.data.id);
-        navigate('/');
-      }
-    } catch (error) {
-      if (error.response) {
-        console.error('Login failed', error.response.status, error.response.data);
-      } else {
-        console.error('login failed', error.message);
-      }
-      alert('login failed');
+    const loginResult = await loginApi(email, password);
+
+    if (loginResult.success) {
+      navigate('/');
+    } else {
+      alert('로그인 실패');
     }
   };
+
+  const goRegister = () => {
+    navigate('/register');
+  }
 
   return(
     <div>
@@ -55,6 +46,7 @@ const Login = () => {
         </div>
         <button type="submit">로그인</button>
       </form>
+      <button onClick={goRegister}>회원가입</button>
     </div>
   );
 };
