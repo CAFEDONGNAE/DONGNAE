@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
-import { registerApi, loginApi, checkEmailApi } from '../../services/authServices';
+import { registerApi, loginApi, checkEmailApi } from '../../services/authService';
 
 const Register = () => {
   const [name, setName] = useState('');

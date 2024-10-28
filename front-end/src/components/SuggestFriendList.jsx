@@ -1,20 +1,17 @@
-import mockApi from "../services/mockApi";
 import SuggestFriendCard from "./SuggestFriendCard";
 import { useState, useEffect } from "react";
+import { fetchSuggestFriends } from "../services/friendService";
 
 const SuggestFriendList = () => {
   const [suggestFriendList, setSuggestFriendList] = useState([]);
 
   const handleSuggestFriendList = async () => {
-    try {
-      const response = await mockApi.get('/friends/suggest');
+    const loadSuggestFriendsResult = await fetchSuggestFriends();
 
-      if (response.status === 200) {
-        console.log('친구목록 불러오기 성공', response);
-        setSuggestFriendList(response.data.member);
-      }
-    } catch (error) {
-      console.error('친구목록 불러오기 실패', error);
+    if (loadSuggestFriendsResult.success) {
+      setSuggestFriendList(loadSuggestFriendsResult.data.member);
+    } else {
+      alert('추천 친구 목록 불러오기 실패')
     }
   };
 

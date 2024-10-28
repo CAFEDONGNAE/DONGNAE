@@ -2,6 +2,23 @@
 import mockApi from './mockApi';
 import useAuthStore from '../store/authStore';
 
+export const registerApi = async (name, email, password) => {
+  try {
+    const response = await mockApi.post('/members/join', {
+      name,
+      email,
+      password
+    });
+
+    if (response.status === 201) {
+      return { success: true, message: '회원가입 성공' };
+    }
+  } catch (error) {
+    console.error('회원가입 실패', error);
+    return { success: false, message: '회원가입 실패' };
+  }
+};
+
 export const loginApi = async (email, password) => {
   try {
     const response = await mockApi.post('/members/login', {
@@ -21,23 +38,6 @@ export const loginApi = async (email, password) => {
   }
 };
 
-export const registerApi = async (name, email, password) => {
-  try {
-    const response = await mockApi.post('/members/join', {
-      name,
-      email,
-      password
-    });
-
-    if (response.status === 201) {
-      return { success: true, message: '회원가입 성공' };
-    }
-  } catch (error) {
-    console.error('회원가입 실패', error);
-    return { success: false, message: '회원가입 실패' };
-  }
-};
-
 export const logoutApi = async () => {
   try {
     const response = await mockApi.post('/members/logout');
@@ -50,6 +50,19 @@ export const logoutApi = async () => {
   } catch (error) {
     console.error('로그아웃 실패', error);
     return { success: false, message: '로그아웃 실패' };
+  }
+};
+
+export const fetchProfile = async () => {
+  try {
+    const response = await mockApi.get('/members/profile');
+
+    if (response.status === 200) {
+      return { success: true, data: response.data, message: '프로필 불러오기 성공' };
+    }
+  } catch (error) {
+    console.error('프로필 불러오기 실패', error);
+    return { success: false, message: '프로필 불러오기 실패' };
   }
 };
 

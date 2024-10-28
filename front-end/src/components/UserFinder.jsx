@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { debounce } from 'lodash';
-import mockApi from '../services/mockApi';
 import UserFinderCard from './UserFinderCard';
+import { searchUsersApi } from '../services/friendService';
 
 const UserFinder = () => {
   const [word, setWord] = useState('');
@@ -9,28 +9,22 @@ const UserFinder = () => {
   const [searchMessage, setSearchMessage] = useState('');
 
   const searchByName = debounce(async (name) => {
-    try {
-      const response = await mockApi.get('/members', {
-        params: { name }
-      });
+    const searchResult = await searchUsersApi(name);
 
-      if (response.status === 200) {
-        const users = response.data.users;
+    if (searchResult.success) {
+      const users = searchResult.data.users;
 
-        if (users.length > 0) {
-          setSearchResults(users);
-          setSearchMessage(`${users.length}명의 사용자가 검색되었습니다.`);
-          console.log(users);
-        } else {
-          setSearchResults([]);
-          setSearchMessage('일치하는 사용자가 없습니다.');
-        }
+      if (users.length > 0) {
+        setSearchResults(users);
+        setSearchMessage(`${users.length}명의 사용자가 검색되었습니다.`);
+      } else {
+        setSearchResults([]);
+        setSearchMessage('일치하는 사용자가 없습니다.');
       }
-    } catch (error) {
-      console.error('이름 검색 중 오류가 발생했습니다.', error);
+    } else {
       setSearchMessage('이름 검색 중 오류가 발생했습니다.');
     }
-  });
+  }, 300);
 
   const handleSearchChange = (e) => {
     const name = e.target.value;

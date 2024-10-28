@@ -1,20 +1,17 @@
-import mockApi from "../services/mockApi";
 import FriendCard from "./FriendCard";
 import { useState, useEffect } from "react";
+import { fetchFriends } from "../services/friendService";
 
 const FriendList = () => {
   const [friendList, setFriendList] = useState([]);
 
   const handleFriendList = async () => {
-    try {
-      const response = await mockApi.get('/friends');
+    const loadFriendsResult = await fetchFriends();
 
-      if (response.status === 200) {
-        console.log('친구목록 불러오기 성공', response);
-        setFriendList(response.data.member);
-      }
-    } catch (error) {
-      console.error('친구목록 불러오기 실패', error);
+    if (loadFriendsResult.success) {
+      setFriendList(loadFriendsResult.data.member);
+    } else {
+      alert('친구 목록 불러오기 실패');
     }
   };
 

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { logoutApi } from '../services/authServices';
+import { logoutApi } from '../services/authService';
 
 const LogoutButton = () => {
   const navigate = useNavigate();

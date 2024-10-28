@@ -1,19 +1,16 @@
 import { useState, useEffect } from 'react';
-import mockApi from '../services/mockApi';
+import { fetchProfile } from '../services/authService';
 
 const MyProfileCard = () => {
   const [profile, setProfile] = useState({});
 
   const handleProfile = async () => {
-    try {
-      const response = await mockApi.get('/members/profile');
+    const loadProfileResult = await fetchProfile();
 
-      if (response.status === 200) {
-        console.log('내 프로필 불러오기 성공', response);
-        setProfile((response.data.member));
-      }
-    } catch (error) {
-      console.error(error, '내 프로필 불러오기 실패');
+    if (loadProfileResult.success) {
+      setProfile(loadProfileResult.data.member);
+    } else {
+      alert('프로필 불러오기 실패');
     }
   };
 
