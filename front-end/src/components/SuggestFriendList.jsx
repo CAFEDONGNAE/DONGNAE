@@ -1,6 +1,6 @@
 import SuggestFriendCard from "./SuggestFriendCard";
 import { useState, useEffect } from "react";
-import { fetchSuggestFriends } from "../services/friendService";
+import { fetchSuggestFriends } from "../services/relationService";
 
 const SuggestFriendList = () => {
   const [suggestFriendList, setSuggestFriendList] = useState([]);

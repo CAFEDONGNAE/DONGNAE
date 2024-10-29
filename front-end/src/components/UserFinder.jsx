@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { debounce } from 'lodash';
 import UserFinderCard from './UserFinderCard';
-import { searchUsersApi } from '../services/friendService';
+import { searchUsersApi } from '../services/relationService';
 
 const UserFinder = () => {
   const [word, setWord] = useState('');
@@ -24,7 +24,7 @@ const UserFinder = () => {
     } else {
       setSearchMessage('이름 검색 중 오류가 발생했습니다.');
     }
-  }, 300);
+  }, 500);
 
   const handleSearchChange = (e) => {
     const name = e.target.value;

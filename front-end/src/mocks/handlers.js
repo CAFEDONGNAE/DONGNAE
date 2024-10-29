@@ -155,7 +155,7 @@ export const handlers = [
   }),
 
   // 친구 추가
-  http.post('http://localhost:5001/friends', async ({ request }) => {
+  http.post('http://localhost:5001/relationships', async ({ request }) => {
     const { id } = await request.json();
     const user = mockUsers.find((u) => u.id === id);
 
@@ -187,7 +187,7 @@ export const handlers = [
   }),
 
   // 친구 목록 불러오기
-  http.get('http://localhost:5001/friends', async () => {
+  http.get('http://localhost:5001/relationships', async () => {
     return HttpResponse.json(
       { member: mockFriends },
       { status: 200 }
@@ -195,7 +195,7 @@ export const handlers = [
   }),
 
   // 추천/친구 목록 불러오기
-  http.get('http://localhost:5001/friends/suggest', async () => {
+  http.get('http://localhost:5001/relationships/suggest', async () => {
     return HttpResponse.json(
       { member: mockSuggestFriends },
       { status: 200 }

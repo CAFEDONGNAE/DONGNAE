@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { addFriend } from "../services/friendService";
+import { addFriend } from "../services/relationService";
 
 const FriendAddButton = ({ id }) => {
   const [isRequest, setIsRequest] = useState(false)

@@ -1,6 +1,6 @@
 import FriendCard from "./FriendCard";
 import { useState, useEffect } from "react";
-import { fetchFriends } from "../services/friendService";
+import { fetchFriends } from "../services/relationService";
 
 const FriendList = () => {
   const [friendList, setFriendList] = useState([]);

@@ -7,9 +7,11 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errors, setErrors] = useState({
     email: true,
-    password: true
+    password: true,
+    passwordConfirm: false
   });
   const [emailCheckMessage, setEmailCheckMessage] = useState('');
   const navigate = useNavigate();
@@ -33,7 +35,7 @@ const Register = () => {
       }));
       setEmailCheckMessage(result.message);
     }
-  }, 300); // 300ms 대기
+  }, 500);
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
@@ -81,10 +83,29 @@ const Register = () => {
     }
   };
 
+  const handlePasswordConfirmChange = (e) => {
+    const value = e.target.value;
+    setPasswordConfirm(value);
+
+    if (errors.password) return;
+
+    if (value === password) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        passwordConfirm: true
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        passwordConfirm: false
+      }));
+    }
+  }
+
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    if (errors.email || errors.password) return;
+    if (errors.email || errors.password || !errors.passwordConfirm) return;
 
     const registerResult = await registerApi(name, email, password);
 
@@ -134,8 +155,18 @@ const Register = () => {
             onChange={handlePasswordChange}
             required
           />
+        </div>
+        <div>
+          <label>비밀번호 확인 : </label>
+          <input
+            type="password"
+            value={passwordConfirm}
+            onChange={handlePasswordConfirmChange}
+            required
+          />
           <p>비밀번호 8자 이상 15자 이하, 영어 소문자, 대문자, 숫자, 특수문자 중 3개 이상 포함</p>
           {errors.password && password.length > 0 && <p>비밀번호 형식이 잘못되었습니다</p>}
+          {!errors.passwordConfirm && !errors.password && passwordConfirm.length > 0 && <p>비밀번호를 다시 확인해주세요</p>}
         </div>
         <button type="submit" disabled={errors.email || errors.password}>회원가입</button>
       </form>
