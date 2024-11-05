@@ -1,10 +1,10 @@
-// import api from './api';
-import mockApi from './mockApi';
+import api from './api';
+// import mockApi from './mockApi';
 import useAuthStore from '../store/authStore';
 
 export const registerApi = async (name, email, password) => {
   try {
-    const response = await mockApi.post('/members/join', {
+    const response = await api.post('/members/join', {
       name,
       email,
       password
@@ -21,12 +21,13 @@ export const registerApi = async (name, email, password) => {
 
 export const loginApi = async (email, password) => {
   try {
-    const response = await mockApi.post('/members/login', {
+    const response = await api.post('/members/login', {
       email,
       password
     });
 
     if (response.status === 200) {
+      console.log(response);
       const login = useAuthStore.getState().login;
       login(response.data.name, response.data.id);
 
@@ -40,7 +41,7 @@ export const loginApi = async (email, password) => {
 
 export const logoutApi = async () => {
   try {
-    const response = await mockApi.post('/members/logout');
+    const response = await api.post('/members/logout');
 
     if (response.status === 200) {
       const logout = useAuthStore.getState().logout;
@@ -55,7 +56,7 @@ export const logoutApi = async () => {
 
 export const fetchProfile = async () => {
   try {
-    const response = await mockApi.get('/members/profile');
+    const response = await api.get('/members/profile');
 
     if (response.status === 200) {
       return { success: true, data: response.data, message: '프로필 불러오기 성공' };
@@ -68,7 +69,7 @@ export const fetchProfile = async () => {
 
 export const checkEmailApi = async (email) => {
   try {
-    const response = await mockApi.post('/members/check-email', { email });
+    const response = await api.post('/members/check-email', { email });
 
     if (response.status === 200) {
       // 이메일 사용 가능

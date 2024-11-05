@@ -49,7 +49,7 @@ public class MemberController {
             HttpServletRequest servletRequest,
             HttpServletResponse servletResponse
     ) {
-
+        System.out.println("들어옴");
         Member member = memberService.login(request);
         if (member == null) {
             return new ResponseEntity<>("존재하지 않습니다.", HttpStatus.UNAUTHORIZED);

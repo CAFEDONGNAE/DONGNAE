@@ -1,8 +1,9 @@
-import mockApi from "./mockApi";
+// import mockApi from "./mockApi";
+import api from "./api"
 
 export const searchUsersApi = async (name) => {
   try {
-    const response = await mockApi.get('/members', {
+    const response = await api.get('/members', {
       params: { name }
     });
 
@@ -17,7 +18,7 @@ export const searchUsersApi = async (name) => {
 
 export const addFriend = async (id) => {
   try {
-    const response = await mockApi.post('/relationships', {
+    const response = await api.post('/relationships', {
       id
     });
 
@@ -32,7 +33,7 @@ export const addFriend = async (id) => {
 
 export const fetchFriends = async () => {
   try {
-    const response = await mockApi.get('/relationships');
+    const response = await api.get('/relationships');
 
     if (response.status === 200) {
       return { success: true, data: response.data, message: '친구 목록 불러오기 성공' };
@@ -45,7 +46,7 @@ export const fetchFriends = async () => {
 
 export const fetchSuggestFriends = async () => {
   try {
-    const response = await mockApi.get('/relationships/suggest');
+    const response = await api.get('/relationships/suggest');
 
     if (response.status === 200) {
       return { success: true, data: response.data, message: '추천 친구 목록 불러오기 성공' };
