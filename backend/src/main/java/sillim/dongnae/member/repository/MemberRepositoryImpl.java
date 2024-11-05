@@ -2,10 +2,12 @@ package sillim.dongnae.member.repository;
 
 import org.springframework.stereotype.Repository;
 import sillim.dongnae.member.entity.Member;
+import sillim.dongnae.relationship.dto.response.FollowSuggestResponse;
+import sillim.dongnae.relationship.dto.response.FollowingResponse;
+import sillim.dongnae.relationship.entity.Relationship;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class MemberRepositoryImpl implements MemberRepository {
@@ -48,5 +50,40 @@ public class MemberRepositoryImpl implements MemberRepository {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean addRelationship(Long memberId, Relationship relationship) {
+        Member member = findById(memberId);
+        member.addRelationShip(relationship);
+        return true;
+    }
+
+    @Override
+    public List<FollowingResponse> getFollowingInfo(List<Long> followingIdList) {
+
+        List<FollowingResponse> followingResponseList = new ArrayList<>();
+
+        for (Long followingId : followingIdList) {
+
+            Member following = findById(followingId);
+            followingResponseList.add(new FollowingResponse(following.getId(), following.getEmail(), following.getNickName()));
+        }
+
+        return followingResponseList;
+    }
+
+    @Override
+    public List<FollowSuggestResponse> getFollowSuggestInfo(List<Long> followSuggestIdList) {
+
+        List<FollowSuggestResponse> followSuggestResponseList = new ArrayList<>();
+
+        for (Long followingId : followSuggestIdList) {
+
+            Member following = findById(followingId);
+            followSuggestResponseList.add(new FollowSuggestResponse(following.getId(), following.getEmail(), following.getNickName()));
+        }
+
+        return followSuggestResponseList;
     }
 }
