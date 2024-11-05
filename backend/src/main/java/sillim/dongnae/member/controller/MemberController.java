@@ -94,8 +94,8 @@ public class MemberController {
         return new ResponseEntity<>(memberService.searchMembers(name), HttpStatus.OK);
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
         // 세션 무효화
         request.getSession().invalidate();
 
@@ -106,7 +106,7 @@ public class MemberController {
         cookie.setMaxAge(0); // 쿠키 즉시 삭제
         response.addCookie(cookie);
 
-        return "Logged out successfully";
+        return new ResponseEntity <> ("로그아웃 완료!",HttpStatus.OK );
     }
 
 }
