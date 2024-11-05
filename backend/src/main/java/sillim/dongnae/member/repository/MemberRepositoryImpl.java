@@ -1,6 +1,7 @@
 package sillim.dongnae.member.repository;
 
 import org.springframework.stereotype.Repository;
+import sillim.dongnae.member.dto.response.MemberProfileResponse;
 import sillim.dongnae.member.entity.Member;
 import sillim.dongnae.relationship.dto.response.FollowSuggestResponse;
 import sillim.dongnae.relationship.dto.response.FollowingResponse;
@@ -8,6 +9,7 @@ import sillim.dongnae.relationship.entity.Relationship;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class MemberRepositoryImpl implements MemberRepository {
@@ -85,5 +87,15 @@ public class MemberRepositoryImpl implements MemberRepository {
         }
 
         return followSuggestResponseList;
+    }
+
+    @Override
+    public List<MemberProfileResponse> searchMember(String query) {
+
+        return memberList.stream()
+                .filter(entity -> entity.getNickName() != null &&
+                                  entity.getNickName().toLowerCase().contains(query.toLowerCase()))
+                .map(MemberProfileResponse::of)
+                .collect(Collectors.toList());
     }
 }

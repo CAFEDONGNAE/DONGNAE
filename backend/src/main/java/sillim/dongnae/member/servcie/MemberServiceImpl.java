@@ -4,8 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sillim.dongnae.member.dto.request.MemberJoinRequest;
 import sillim.dongnae.member.dto.request.MemberLoginRequest;
+import sillim.dongnae.member.dto.response.MemberProfileResponse;
 import sillim.dongnae.member.entity.Member;
 import sillim.dongnae.member.repository.MemberRepository;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -38,5 +41,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member findById(Long id) {
         return memberRepository.findById(id);
+    }
+
+    @Override
+    public List<MemberProfileResponse> searchMembers(String param) {
+        return memberRepository.searchMember(param);
     }
 }

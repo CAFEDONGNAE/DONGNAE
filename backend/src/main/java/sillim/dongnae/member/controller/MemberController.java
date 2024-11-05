@@ -15,8 +15,10 @@ import sillim.dongnae.member.dto.response.MemberProfileResponse;
 import sillim.dongnae.member.entity.Member;
 import sillim.dongnae.member.servcie.MemberService;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -85,4 +87,10 @@ public class MemberController {
 
         return new ResponseEntity<>(MemberProfileResponse.of(member), HttpStatus.OK);
     }
+
+    @GetMapping
+    public ResponseEntity<List<MemberProfileResponse>> searchMembers(@RequestParam String query) {
+        return new ResponseEntity<>(memberService.searchMembers(query), HttpStatus.OK);
+    }
+
 }

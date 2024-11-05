@@ -42,7 +42,7 @@ public class RelationshipController {
         return new ResponseEntity<>(relationshipService.getFollowing((long) session.getAttribute("memberId")), HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/suggest")
     public ResponseEntity<List<FollowSuggestResponse>> getFollowSuggest(HttpServletRequest servletRequest) {
 
         HttpSession session = servletRequest.getSession(false);
