@@ -94,4 +94,19 @@ public class MemberController {
         return new ResponseEntity<>(memberService.searchMembers(name), HttpStatus.OK);
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        // 세션 무효화
+        request.getSession().invalidate();
+
+        // 쿠키 삭제
+        Cookie cookie = new Cookie("JSESSIONID", null);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0); // 쿠키 즉시 삭제
+        response.addCookie(cookie);
+
+        return "Logged out successfully";
+    }
+
 }
