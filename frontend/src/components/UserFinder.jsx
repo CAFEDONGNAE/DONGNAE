@@ -12,7 +12,7 @@ const UserFinder = () => {
     const searchResult = await searchUsersApi(name);
 
     if (searchResult.success) {
-      const users = searchResult.data.users;
+      const users = searchResult.data;
 
       if (users.length > 0) {
         setSearchResults(users);

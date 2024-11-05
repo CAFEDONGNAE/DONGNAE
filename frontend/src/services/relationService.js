@@ -6,6 +6,7 @@ export const searchUsersApi = async (name) => {
     const response = await api.get('/members', {
       params: { name }
     });
+    console.log('사용자 검색', response);
 
     if (response.status === 200) {
       return { success: true, data: response.data, message: '사용자 검색 성공' };
@@ -21,6 +22,7 @@ export const addFriend = async (id) => {
     const response = await api.post('/relationships', {
       id
     });
+    console.log('친구 추가', response);
 
     if (response.status === 200) {
       return { success: true, message: '친구 추가 성공'};
@@ -34,6 +36,7 @@ export const addFriend = async (id) => {
 export const fetchFriends = async () => {
   try {
     const response = await api.get('/relationships');
+    console.log('친구 리스트', response);
 
     if (response.status === 200) {
       return { success: true, data: response.data, message: '친구 목록 불러오기 성공' };
@@ -47,6 +50,7 @@ export const fetchFriends = async () => {
 export const fetchSuggestFriends = async () => {
   try {
     const response = await api.get('/relationships/suggest');
+    console.log('추천 친구 리스트', response);
 
     if (response.status === 200) {
       return { success: true, data: response.data, message: '추천 친구 목록 불러오기 성공' };

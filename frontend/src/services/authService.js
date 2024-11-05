@@ -31,7 +31,7 @@ export const loginApi = async (email, password) => {
     if (response.status === 200) {
       console.log(response);
       const login = useAuthStore.getState().login;
-      login(response.data.nickname, response.data.email);
+      login(response.data.name, response.data.email);
 
       return { success: true, message: '로그인 성공' };
     }

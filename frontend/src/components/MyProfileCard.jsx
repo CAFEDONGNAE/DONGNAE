@@ -8,7 +8,7 @@ const MyProfileCard = () => {
     const loadProfileResult = await fetchProfile();
 
     if (loadProfileResult.success) {
-      setProfile(loadProfileResult.data.member);
+      setProfile(loadProfileResult.data);
     } else {
       alert('프로필 불러오기 실패');
     }

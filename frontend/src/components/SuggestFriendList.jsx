@@ -9,7 +9,7 @@ const SuggestFriendList = () => {
     const loadSuggestFriendsResult = await fetchSuggestFriends();
 
     if (loadSuggestFriendsResult.success) {
-      setSuggestFriendList(loadSuggestFriendsResult.data.member);
+      setSuggestFriendList(loadSuggestFriendsResult.data);
     } else {
       alert('추천 친구 목록 불러오기 실패')
     }

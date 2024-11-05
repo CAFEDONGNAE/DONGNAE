@@ -90,8 +90,8 @@ public class MemberController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MemberProfileResponse>> searchMembers(@RequestParam String query) {
-        return new ResponseEntity<>(memberService.searchMembers(query), HttpStatus.OK);
+    public ResponseEntity<List<MemberProfileResponse>> searchMembers(@RequestParam String name) {
+        return new ResponseEntity<>(memberService.searchMembers(name), HttpStatus.OK);
     }
 
 }

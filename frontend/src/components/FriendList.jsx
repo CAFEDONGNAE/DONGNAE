@@ -9,7 +9,7 @@ const FriendList = () => {
     const loadFriendsResult = await fetchFriends();
 
     if (loadFriendsResult.success) {
-      setFriendList(loadFriendsResult.data.member);
+      setFriendList(loadFriendsResult.data);
     } else {
       alert('친구 목록 불러오기 실패');
     }
