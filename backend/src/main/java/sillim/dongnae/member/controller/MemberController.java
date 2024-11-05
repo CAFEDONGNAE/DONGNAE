@@ -66,6 +66,7 @@ public class MemberController {
         sessionCookie.setPath("/"); // 전체 도메인에 대해 유효
         servletResponse.addCookie(sessionCookie);
 
+        System.out.println(member.getNickName());
         return new ResponseEntity<>(MemberProfileResponse.of(member), HttpStatus.OK);
     }
 

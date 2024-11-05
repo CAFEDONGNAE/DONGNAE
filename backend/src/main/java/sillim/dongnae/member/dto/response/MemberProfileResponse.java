@@ -11,7 +11,7 @@ import sillim.dongnae.member.entity.Member;
 public class MemberProfileResponse {
 
     private String email;
-    private String nickname;
+    private String name;
 
     public static MemberProfileResponse of(Member member) {
         return new MemberProfileResponse(member.getEmail(), member.getNickName());
