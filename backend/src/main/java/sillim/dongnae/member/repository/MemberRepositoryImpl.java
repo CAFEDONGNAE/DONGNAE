@@ -47,15 +47,19 @@ public class MemberRepositoryImpl implements MemberRepository {
     public Member findById(Long id) {
 
         for (Member member : memberList) {
+            System.out.println(member.getId()+" ");
             if (member.getId().equals(id)) {
                 return member;
             }
         }
+
+        System.out.println("찾지못함");
         return null;
     }
 
     @Override
     public boolean addRelationship(Long memberId, Relationship relationship) {
+        System.out.println(memberId);
         Member member = findById(memberId);
         member.addRelationShip(relationship);
         return true;

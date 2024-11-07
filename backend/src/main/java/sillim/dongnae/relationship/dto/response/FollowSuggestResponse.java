@@ -9,11 +9,11 @@ public class FollowSuggestResponse {
 
     private Long id;
     private String email;
-    private String nickname;
+    private String name;
 
     public FollowSuggestResponse(Long id, String email, String nickname) {
         this.id = id;
         this.email = email;
-        this.nickname = nickname;
+        this.name = nickname;
     }
 }

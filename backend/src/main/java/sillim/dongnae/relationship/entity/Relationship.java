@@ -19,4 +19,8 @@ public class Relationship {
     public void setRelationshipId(Long relationshipId) {
         this.id = relationshipId;
     }
+
+    public void approve() {
+        this.approve = true;
+    }
 }

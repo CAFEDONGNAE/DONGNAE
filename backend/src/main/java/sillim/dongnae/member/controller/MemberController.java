@@ -49,7 +49,7 @@ public class MemberController {
             HttpServletRequest servletRequest,
             HttpServletResponse servletResponse
     ) {
-
+        System.out.println("들어옴");
         Member member = memberService.login(request);
         if (member == null) {
             return new ResponseEntity<>("존재하지 않습니다.", HttpStatus.UNAUTHORIZED);
@@ -66,6 +66,7 @@ public class MemberController {
         sessionCookie.setPath("/"); // 전체 도메인에 대해 유효
         servletResponse.addCookie(sessionCookie);
 
+        System.out.println(member.getNickName());
         return new ResponseEntity<>(MemberProfileResponse.of(member), HttpStatus.OK);
     }
 
@@ -89,8 +90,23 @@ public class MemberController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MemberProfileResponse>> searchMembers(@RequestParam String query) {
-        return new ResponseEntity<>(memberService.searchMembers(query), HttpStatus.OK);
+    public ResponseEntity<List<MemberProfileResponse>> searchMembers(@RequestParam String name) {
+        return new ResponseEntity<>(memberService.searchMembers(name), HttpStatus.OK);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
+        // 세션 무효화
+        request.getSession().invalidate();
+
+        // 쿠키 삭제
+        Cookie cookie = new Cookie("JSESSIONID", null);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0); // 쿠키 즉시 삭제
+        response.addCookie(cookie);
+
+        return new ResponseEntity <> ("로그아웃 완료!",HttpStatus.OK );
     }
 
 }

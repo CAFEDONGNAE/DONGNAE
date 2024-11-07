@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface RelationshipRepository {
 
+    Relationship findRelation(Long followerId, Long followingId);
+
     Relationship addRelationship(Long followerId, Long followingId, boolean approve);
 
     List<Long> getFollowing(Long memberId);

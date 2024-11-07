@@ -9,12 +9,12 @@ public class FollowingResponse {
 
     private Long id;
     private String email;
-    private String nickname;
+    private String name;
 
     public FollowingResponse(Long id, String email, String nickname) {
         this.id = id;
         this.email = email;
-        this.nickname = nickname;
+        this.name = nickname;
     }
 
 }

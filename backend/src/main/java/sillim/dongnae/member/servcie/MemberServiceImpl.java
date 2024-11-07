@@ -24,7 +24,7 @@ public class MemberServiceImpl implements MemberService {
             return false;
         }
 
-        Member member = new Member(request.getEmail(), request.getNickname(), request.getPassword());
+        Member member = new Member(request.getEmail(), request.getName(), request.getPassword());
         return memberRepository.registerMember(member);
     }
 

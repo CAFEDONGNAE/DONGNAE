@@ -10,11 +10,12 @@ import sillim.dongnae.member.entity.Member;
 @AllArgsConstructor
 public class MemberProfileResponse {
 
+    private Long id;
     private String email;
-    private String nickname;
+    private String name;
 
     public static MemberProfileResponse of(Member member) {
-        return new MemberProfileResponse(member.getEmail(), member.getNickName());
+        return new MemberProfileResponse(member.getId(), member.getEmail(), member.getNickName());
     }
 
 }

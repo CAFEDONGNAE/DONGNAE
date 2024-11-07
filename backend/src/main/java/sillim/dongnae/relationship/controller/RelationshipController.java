@@ -29,7 +29,7 @@ public class RelationshipController {
             return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
         }
 
-        relationshipService.addRelationship((long) session.getAttribute("memberId"), request.getFollowingId());
+        relationshipService.addRelationship((long) session.getAttribute("memberId"), request.getId());
 
         return new ResponseEntity<>("팔로잉 했습니다.", HttpStatus.OK);
     }

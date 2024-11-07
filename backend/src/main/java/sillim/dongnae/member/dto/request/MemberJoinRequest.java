@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class MemberJoinRequest {
 
     private String email;
-    private String nickname;
+    private String name;
     private String password;
 
 }

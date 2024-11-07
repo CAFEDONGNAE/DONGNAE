@@ -5,6 +5,7 @@ import sillim.dongnae.relationship.entity.Relationship;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Repository
 public class RelationshipRepositoryImpl implements RelationshipRepository {
@@ -12,9 +13,20 @@ public class RelationshipRepositoryImpl implements RelationshipRepository {
     private final List<Relationship> relationshipList = new ArrayList<>();
 
     @Override
+    public Relationship findRelation(Long followerId, Long followingId) {
+
+        for (Relationship relationship : relationshipList) {
+            if(relationship.getFollowerId().equals(followerId) && relationship.getFollowingId().equals(followingId)){
+                return relationship;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public Relationship addRelationship(Long followerId, Long followingId, boolean approve) {
 
-        Relationship relationship = new Relationship(followerId, followingId, true);
+        Relationship relationship = new Relationship(followerId, followingId, approve);
         relationship.setRelationshipId((long) (relationshipList.size() + 1));
 
         relationshipList.add(relationship);
@@ -28,11 +40,10 @@ public class RelationshipRepositoryImpl implements RelationshipRepository {
         List<Long> followingIdList = new ArrayList<>();
 
         for (Relationship relationship : relationshipList) {
-            if (relationship.getFollowerId().equals(memberId)) {
+            if (relationship.getFollowerId().equals(memberId)  && relationship.isApprove()) {
                 followingIdList.add(relationship.getFollowingId());
             }
         }
-
         return followingIdList;
     }
 
@@ -43,7 +54,7 @@ public class RelationshipRepositoryImpl implements RelationshipRepository {
         List<Long> followingSuggestIdList = new ArrayList<>();
 
         for (Relationship relationship : relationshipList) {
-            if (relationship.getFollowingId().equals(memberId)) {
+            if (relationship.getFollowingId().equals(memberId) && relationship.isApprove()) {
                 followingSuggestIdList.add(relationship.getFollowerId());
             }
         }
