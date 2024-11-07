@@ -3,12 +3,11 @@ import PropTypes from "prop-types";
 const SelectFriendCard = ({ friend, isSelected, onSelect }) => {
   return (
     <div
-      onClick={() => onSelect(friend.id)}
+      onClick={() => onSelect(friend)}
       style={{
         cursor: 'pointer',
-        backgroundColor: isSelected ? '#d3d3d3' : 'white',
+        backgroundColor: isSelected ? '#222222' : 'black',
         padding: '10px',
-        border: '1px solid #ccc',
         marginBottom: '5px',
       }}
     >
