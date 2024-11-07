@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import SelectFriendList from './SelectFriendList';
 
 const CreateChatRoomModal = ({ isOpen, onClose, onCreate }) => {
   const [roomName, setRoomName] = useState('');
+  const [selectedFriends, setSelectedFriends] = useState([]);
 
   if (!isOpen) return null;
 
   const handleCreate = () => {
-    if (roomName.trim()) {
-      onCreate(roomName);
+    if (roomName.trim() && selectedFriends.length > 0) {
+      onCreate(roomName, selectedFriends);
       onClose();
     }
   }
@@ -22,10 +24,8 @@ const CreateChatRoomModal = ({ isOpen, onClose, onCreate }) => {
         onChange={(e) => setRoomName(e.target.value)}
         placeholder='채팅방 이름을 입력하세요'
       />
-      <h3>친구 목록</h3>
-      <ul>
-        <li>친구 1..</li>
-      </ul>
+      <h3>친구 선택</h3>
+      <SelectFriendList onFriendSelect={setSelectedFriends} />
       <button onClick={handleCreate}>생성</button>
       <button onClick={onClose}>취소</button>
     </section>

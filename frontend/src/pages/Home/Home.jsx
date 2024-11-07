@@ -8,8 +8,9 @@ const Home = () => {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const { isCreateChatRoomModalOpen, openCreateChatRoomModal, closeCreateChatRoomModal } = useModalStore();
 
-  const createChatRoom = (roomName) => {
+  const createChatRoom = (roomName, selectedFriends) => {
     console.log(`채팅방 생성: ${roomName}`);
+    console.log(`채팅방 참여자: ${selectedFriends}`)
     closeCreateChatRoomModal();
   }
 
