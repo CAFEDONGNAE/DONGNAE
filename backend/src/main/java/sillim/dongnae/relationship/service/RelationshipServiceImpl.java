@@ -20,6 +20,12 @@ public class RelationshipServiceImpl implements RelationshipService {
     @Override
     public boolean addRelationship(Long followerId, Long followingId) {
 
+        Relationship relation = relationshipRepository.findRelation(followerId, followingId);
+        if (relation != null) {
+            relation.approve();
+            return true;
+        }
+
         Relationship followerRelationship = relationshipRepository.addRelationship(followerId, followingId, true);
         memberRepository.addRelationship(followerId, followerRelationship);
 

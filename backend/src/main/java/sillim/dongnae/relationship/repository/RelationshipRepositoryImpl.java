@@ -5,11 +5,23 @@ import sillim.dongnae.relationship.entity.Relationship;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Repository
 public class RelationshipRepositoryImpl implements RelationshipRepository {
 
     private final List<Relationship> relationshipList = new ArrayList<>();
+
+    @Override
+    public Relationship findRelation(Long followerId, Long followingId) {
+
+        for (Relationship relationship : relationshipList) {
+            if(relationship.getFollowerId().equals(followerId) && relationship.getFollowingId().equals(followingId)){
+                return relationship;
+            }
+        }
+        return null;
+    }
 
     @Override
     public Relationship addRelationship(Long followerId, Long followingId, boolean approve) {
