@@ -40,7 +40,23 @@ globalStyle('a::after', {
   backgroundColor: themeVars.color.focus
 });
 
-
 globalStyle('button', {
   cursor: 'pointer',
+  backgroundColor: themeVars.color.buttonBackground,
+  color: themeVars.color.textOpposite,
+  borderWidth: 0,
+  outline: 'none',
+  padding: '12px 24px',
+  borderRadius: '24px',
+});
+
+globalStyle('button:disabled', {
+  backgroundColor: themeVars.color.buttonDisabled,
+  cursor: 'not-allowed',
+});
+
+globalStyle('input', {
+  backgroundColor: themeVars.color.inputBackground,
+  borderWidth: 0,
+  outline: 'none',
 });

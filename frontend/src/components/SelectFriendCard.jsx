@@ -1,6 +1,18 @@
 import PropTypes from "prop-types";
 
-const SelectFriendCard = ({ friend, isSelected, onSelect }) => {
+const highlightText = (text, query) => {
+  if (!query) {
+    return text;
+  }
+
+  const regex = new RegExp(`(${query})`, 'gi');
+  const parts = text.split(regex);
+  return parts.map((part, index) =>
+    regex.test(part) ? <mark key={index}>{part}</mark> : part
+  );
+};
+
+const SelectFriendCard = ({ friend, isSelected, onSelect, searchQuery }) => {
   return (
     <div
       onClick={() => onSelect(friend)}
@@ -11,7 +23,7 @@ const SelectFriendCard = ({ friend, isSelected, onSelect }) => {
         marginBottom: '5px',
       }}
     >
-      <p>{friend.name}</p>
+      <p>{highlightText(friend.name, searchQuery)}</p>
     </div>
   );
 };
@@ -22,7 +34,8 @@ SelectFriendCard.propTypes = {
     id: PropTypes.number.isRequired,
   }).isRequired,
   isSelected: PropTypes.bool.isRequired,
-  onSelect: PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired,
+  searchQuery: PropTypes.string
 };
 
 export default SelectFriendCard;

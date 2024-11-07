@@ -6,6 +6,10 @@ export const themeVars = createThemeContract({
     focus: null,
     background: null,
     text: null,
+    textOpposite: null,
+    inputBackground: null,
+    buttonBackground: null,
+    buttonDisabled: null,
   },
 });
 
@@ -15,6 +19,10 @@ export const lightThemeClass = createTheme(themeVars, {
     focus: '#003adb',
     background: '#ffffff',
     text: '#111111',
+    textOpposite: '#ffffff',
+    inputBackground: '#dddddd',
+    buttonBackground: '#222222',
+    buttonDisabled: '#aaaaaa',
   },
 });
 
@@ -23,6 +31,10 @@ export const darkThemeClass = createTheme(themeVars, {
     focus: '#003adb',
     background: '#111111',
     text: '#ffffff',
+    textOpposite: '#111111',
+    inputBackground: '#999999',
+    buttonBackground: '#ffffff',
+    buttonDisabled: '#444444',
   },
 });
 

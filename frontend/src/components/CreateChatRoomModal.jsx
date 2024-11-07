@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import SelectFriendList from './SelectFriendList';
 import SelectedFriendItem from './SelectedFriendItem';
 // import { createChatRoom } from '../services/chatService';
+import { modalOverlay, modalContainer, modalHeader, modalContent, modalActions } from '../styles/modal.css';
 
 const CreateChatRoomModal = ({ isOpen, onClose, onCreate }) => {
   const [roomName, setRoomName] = useState('');
@@ -54,44 +55,50 @@ const CreateChatRoomModal = ({ isOpen, onClose, onCreate }) => {
   };
 
   return (
-    <section>
-      <h2>채팅방 생성</h2>
-      <input 
-        type="text"
-        value={roomName}
-        onChange={handleRoomNameChange}
-        placeholder='채팅방 이름을 입력하세요'
-      />
-      <h3>친구 선택 {selectedFriends.length > 0 && selectedFriends.length}</h3>
-      <div>
-        {selectedFriends.length > 0 && (
-          <>
-            {selectedFriends.map((friend) => (
-              <SelectedFriendItem 
-                key={friend.id}
-                friend={friend}
-                onDeselect={handleDeselectFriend}
-              />
-            ))}
-          </>
-        )}
-      </div>
-      <SelectFriendList
-        selectedFriends={selectedFriends}
-        onFriendSelect={(friend) => {
-          setSelectedFriends((prevSelected) => {
-            const isAlreadySelected = prevSelected.some((f) => f.id === friend.id);
-            if (isAlreadySelected) {
-              return prevSelected.filter((f) => f.id !== friend.id);
-            } else {
-              return [...prevSelected, friend];
-            }
-          });
-        }}
-      />
-      <button onClick={handleCreate}>생성</button>
-      <button onClick={onClose}>취소</button>
-    </section>
+    <div className={modalOverlay}>
+      <section className={modalContainer}>
+        <h2 className={modalHeader}>채팅방 생성</h2>
+        <input 
+          type="text"
+          value={roomName}
+          onChange={handleRoomNameChange}
+          placeholder='채팅방 이름을 입력하세요'
+        />
+        <div className={modalContent}>
+          <h3>친구 선택 {selectedFriends.length > 0 && selectedFriends.length}</h3>
+          <div>
+            {selectedFriends.length > 0 && (
+              <>
+                {selectedFriends.map((friend) => (
+                  <SelectedFriendItem 
+                    key={friend.id}
+                    friend={friend}
+                    onDeselect={handleDeselectFriend}
+                  />
+                ))}
+              </>
+            )}
+          </div>
+          <SelectFriendList
+            selectedFriends={selectedFriends}
+            onFriendSelect={(friend) => {
+              setSelectedFriends((prevSelected) => {
+                const isAlreadySelected = prevSelected.some((f) => f.id === friend.id);
+                if (isAlreadySelected) {
+                  return prevSelected.filter((f) => f.id !== friend.id);
+                } else {
+                  return [...prevSelected, friend];
+                }
+              });
+            }}
+          />
+        </div>
+        <div className={modalActions}>
+          <button onClick={handleCreate}>생성</button>
+          <button onClick={onClose}>취소</button>
+        </div>
+      </section>
+    </div>
   );
 };
 
