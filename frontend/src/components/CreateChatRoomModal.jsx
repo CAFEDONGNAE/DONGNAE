@@ -1,21 +1,50 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SelectFriendList from './SelectFriendList';
 import SelectedFriendItem from './SelectedFriendItem';
+// import { createChatRoom } from '../services/chatService';
 
 const CreateChatRoomModal = ({ isOpen, onClose, onCreate }) => {
   const [roomName, setRoomName] = useState('');
   const [selectedFriends, setSelectedFriends] = useState([]);
+  const [isCustomName, setIsCustomName] = useState(false);
+
+  useEffect(() => {
+    if (selectedFriends.length > 0 && !isCustomName) {
+      const defaultName = selectedFriends.map((f) => f.name).join(', ');
+      setRoomName(defaultName);
+    }
+  }, [selectedFriends, isCustomName]);
 
   if (!isOpen) return null;
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (roomName.trim() && selectedFriends.length > 0) {
-      onCreate(roomName, selectedFriends);
+      const memberId = selectedFriends.map(friend => friend.id);
+      // const createResult = await createChatRoom(memberId, roomName);
+      
+      // if (createResult) {
+      //   setRoomName('');
+      //   setSelectedFriends([]);
+      //   onClose();
+      // } else {
+      //   alert('채팅방 생성 실패');
+      // }
+      onCreate(roomName, memberId);
       setRoomName('');
       setSelectedFriends([]);
       onClose();
     }
+  };
+
+  const handleRoomNameChange = (e) => {
+    const value = e.target.value;
+    if (value === '') {
+      setIsCustomName(false);
+    } else {
+      setIsCustomName(true);
+    }
+    setRoomName(value);
   }
 
   const handleDeselectFriend = (friendId) => {
@@ -30,7 +59,7 @@ const CreateChatRoomModal = ({ isOpen, onClose, onCreate }) => {
       <input 
         type="text"
         value={roomName}
-        onChange={(e) => setRoomName(e.target.value)}
+        onChange={handleRoomNameChange}
         placeholder='채팅방 이름을 입력하세요'
       />
       <h3>친구 선택 {selectedFriends.length > 0 && selectedFriends.length}</h3>
