@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
 import { registerApi, loginApi, checkEmailApi } from '../../services/authService';
@@ -19,23 +19,27 @@ const Register = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   // debounce 적용된 이메일 체크 함수
-  const debouncedCheckEmail = debounce(async (email) => {
-    const result = await checkEmailApi(email);
+  const debouncedCheckEmail = useCallback(
+    debounce(async (email) => {
+      setEmailCheckMessage('중복 확인 중..');
+      const result = await checkEmailApi(email);
 
-    if (result.success) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        email: false
-      }));
-      setEmailCheckMessage(result.message);
-    } else {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        email: true
-      }));
-      setEmailCheckMessage(result.message);
-    }
-  }, 500);
+      if (result.success) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: false
+        }));
+        setEmailCheckMessage(result.message);
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: true
+        }));
+        setEmailCheckMessage(result.message);
+      }
+    }, 500),
+    []
+  );
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
@@ -168,7 +172,7 @@ const Register = () => {
           {errors.password && password.length > 0 && <p>비밀번호 형식이 잘못되었습니다</p>}
           {!errors.passwordConfirm && !errors.password && passwordConfirm.length > 0 && <p>비밀번호를 다시 확인해주세요</p>}
         </div>
-        <button type="submit" disabled={errors.email || errors.password}>회원가입</button>
+        <button type="submit" disabled={errors.email || errors.password || !errors.passwordConfirm}>회원가입</button>
       </form>
     </div>
   );
