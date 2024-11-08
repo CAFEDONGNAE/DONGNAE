@@ -14,6 +14,12 @@ public class MemberProfileResponse {
     private String email;
     private String name;
 
+    public MemberProfileResponse(Member member) {
+        this.id = member.getId();
+        this.email = member.getEmail();
+        this.name = member.getNickName();
+    }
+
     public static MemberProfileResponse of(Member member) {
         return new MemberProfileResponse(member.getId(), member.getEmail(), member.getNickName());
     }
