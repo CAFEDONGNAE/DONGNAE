@@ -39,7 +39,12 @@ export const fetchFriends = async () => {
     console.log('친구 리스트', response);
 
     if (response.status === 200) {
-      return { success: true, data: response.data, message: '친구 목록 불러오기 성공' };
+      if (response.data.length > 1) {
+        const orderedData = response.data.sort((a, b) => a.name.localeCompare(b.name));
+        return { success: true, data: orderedData, message: '추천 친구 목록 불러오기 성공' };
+      } else {
+        return { success: true, data: response.data, message: '추천 친구 목록 불러오기 성공' };
+      }
     }
   } catch (error) {
     console.error('친구 목록 불러오기 실패', error);
@@ -53,7 +58,12 @@ export const fetchSuggestFriends = async () => {
     console.log('추천 친구 리스트', response);
 
     if (response.status === 200) {
-      return { success: true, data: response.data, message: '추천 친구 목록 불러오기 성공' };
+      if (response.data.length > 1) {
+        const orderedData = response.data.sort((a, b) => a.name.localeCompare(b.name));
+        return { success: true, data: orderedData, message: '추천 친구 목록 불러오기 성공' };
+      } else {
+        return { success: true, data: response.data, message: '추천 친구 목록 불러오기 성공' };
+      }
     }
   } catch (error) {
     console.error('친구 목록 불러오기 실패', error);

@@ -1,36 +1,47 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import SelectFriendCard from './SelectFriendCard';
 import { fetchFriends } from '../services/relationService';
 import { useQuery } from '@tanstack/react-query';
-import PropTypes from 'prop-types';
 
 const SelectFriendList = ({ selectedFriends, onFriendSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredFriends, setFilteredFriends] = useState([]);
+  // const [filteredFriends, setFilteredFriends] = useState([]);
 
-  // 친구 목록 캐싱
+  const fetchFriendList = async () => {
+    const loadFriendsResult = await fetchFriends();
+    if (loadFriendsResult.success) {
+      return loadFriendsResult.data;
+    } else {
+      throw new Error('친구 목록 불러오기 실패');
+    }
+  };
+  
   const { data: friendList = [], isLoading, error } = useQuery({
-    queryKey: ['friendList'],
-    queryFn: async () => {
-      const loadFriendsResult = await fetchFriends();
-      if (loadFriendsResult.success) {
-        return loadFriendsResult.data;
-      } else {
-        throw new Error('친구 목록 불러오기 실패');
-      }
-    },
-    staleTime: 1000 * 60 * 5,
+      queryKey: ['friendList'],
+      queryFn: fetchFriendList,
+      staleTime: 1000 * 60 * 5
   });
 
   // 검색어에 따라 친구 목록 필터링
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (searchTerm.trim() === '') {
+  //     setFilteredFriends(friendList);
+  //   } else {
+  //     const filtered = friendList.filter((f) =>
+  //       f.name.toLowerCase().includes(searchTerm.toLowerCase())
+  //     );
+  //     setFilteredFriends(filtered);
+  //   }
+  // }, [searchTerm, friendList]);
+
+  const filteredFriends = useMemo(() => {
     if (searchTerm.trim() === '') {
-      setFilteredFriends(friendList);
+      return friendList;
     } else {
-      const filtered = friendList.filter((f) =>
+      return friendList.filter((f) =>
         f.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setFilteredFriends(filtered);
     }
   }, [searchTerm, friendList]);
 

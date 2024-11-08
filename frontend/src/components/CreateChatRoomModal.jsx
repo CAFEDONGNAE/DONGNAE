@@ -13,9 +13,11 @@ const CreateChatRoomModal = ({ isOpen, onClose, onCreate }) => {
   useEffect(() => {
     if (selectedFriends.length > 0 && !isCustomName) {
       const defaultName = selectedFriends.map((f) => f.name).join(', ');
-      setRoomName(defaultName);
+      if (roomName !== defaultName) {
+        setRoomName(defaultName);
+      }
     }
-  }, [selectedFriends, isCustomName]);
+  }, [selectedFriends, isCustomName, roomName]);
 
   if (!isOpen) return null;
 
@@ -53,6 +55,7 @@ const CreateChatRoomModal = ({ isOpen, onClose, onCreate }) => {
       return prevSelected.filter((f) => f.id !== friendId)
     });
   };
+  
 
   return (
     <div
