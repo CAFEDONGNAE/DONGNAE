@@ -18,5 +18,5 @@ public interface MemberService {
 
     Member findById(Long id);
 
-    List<MemberProfileResponse> searchMembers(String param);
+    List<MemberProfileResponse> searchMembers(String param, Long memberId);
 }
