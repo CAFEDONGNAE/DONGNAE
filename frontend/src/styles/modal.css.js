@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { style, styleVariants } from '@vanilla-extract/css';
 import { themeVars } from './theme.css';
 
 export const modalOverlay = style({
@@ -15,7 +15,7 @@ export const modalOverlay = style({
 });
 
 export const modalContainer = style({
-  backgroundColor: themeVars.color.background,
+  backgroundColor: themeVars.color.background.body,
   borderRadius: '8px',
   padding: '20px',
   maxWidth: '500px',
@@ -37,4 +37,21 @@ export const modalActions = style({
   display: 'flex',
   justifyContent: 'flex-end',
   gap: '10px',
+});
+
+export const modalItemLayout = style({
+  cursor: 'pointer',
+  padding: '8px',
+  backgroundColor: '#cccccc'
+});
+
+export const modalItem = styleVariants({
+  default: [modalItemLayout],
+  defaultSelected: [modalItemLayout, {
+    backgroundColor: themeVars.color.brand
+  }],
+  mini: [modalItemLayout, {
+    padding: '2px',
+    border: '1px solid #ccc',
+  }]
 });

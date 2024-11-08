@@ -38,7 +38,7 @@ const Register = () => {
         setEmailCheckMessage(result.message);
       }
     }, 500),
-    []
+    [setErrors, setEmailCheckMessage]
   );
 
   const handleEmailChange = (e) => {
@@ -57,7 +57,7 @@ const Register = () => {
         ...prevErrors,
         email: true
       }));
-      setEmailCheckMessage('이메일 형식이 올바르지 않습니다.');
+      setEmailCheckMessage('형식이 올바르지 않습니다.');
     }
   };
 
@@ -133,7 +133,7 @@ const Register = () => {
       <h1>회원가입</h1>
       <form onSubmit={handleRegister}>
         <div>
-          <label>닉네임 : </label>
+          <p><u>닉네임</u></p>
           <input 
             type="text"
             value={name}
@@ -142,17 +142,16 @@ const Register = () => {
           />
         </div>
         <div>
-          <label>이메일 : </label>
+          <p><u>이메일</u> {email.length > 0 && <span>{emailCheckMessage}</span>}</p>
           <input 
             type="email"
             value={email}
             onChange={handleEmailChange}
             required
           />
-          {email.length > 0 && <p>{emailCheckMessage}</p>}
         </div>
         <div>
-          <label>비밀번호 : </label>
+          <p><u>비밀번호</u> {errors.password && password.length > 0 && <span>형식이 잘못되었습니다</span>}</p>
           <input 
             type="password"
             value={password}
@@ -161,7 +160,7 @@ const Register = () => {
           />
         </div>
         <div>
-          <label>비밀번호 확인 : </label>
+          <p><u>비밀번호 확인</u> {!errors.passwordConfirm && !errors.password && passwordConfirm.length > 0 && <span>일치하지 않습니다</span>}</p>
           <input
             type="password"
             value={passwordConfirm}
@@ -169,8 +168,6 @@ const Register = () => {
             required
           />
           <p>비밀번호 8자 이상 15자 이하, 영어 소문자, 대문자, 숫자, 특수문자 중 3개 이상 포함</p>
-          {errors.password && password.length > 0 && <p>비밀번호 형식이 잘못되었습니다</p>}
-          {!errors.passwordConfirm && !errors.password && passwordConfirm.length > 0 && <p>비밀번호를 다시 확인해주세요</p>}
         </div>
         <button type="submit" disabled={errors.email || errors.password || !errors.passwordConfirm}>회원가입</button>
       </form>

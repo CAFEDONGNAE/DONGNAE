@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { modalItem } from "../styles/modal.css";
 
 const highlightText = (text, query) => {
   if (!query) {
@@ -15,13 +16,8 @@ const highlightText = (text, query) => {
 const SelectFriendCard = ({ friend, isSelected, onSelect, searchQuery }) => {
   return (
     <div
+      className={isSelected ? modalItem.defaultSelected : modalItem.default}
       onClick={() => onSelect(friend)}
-      style={{
-        cursor: 'pointer',
-        backgroundColor: isSelected ? '#222222' : 'black',
-        padding: '10px',
-        marginBottom: '5px',
-      }}
     >
       <p>{highlightText(friend.name, searchQuery)}</p>
     </div>

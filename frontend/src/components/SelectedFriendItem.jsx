@@ -1,16 +1,11 @@
 import PropTypes from "prop-types";
+import { modalItem } from "../styles/modal.css";
 
 const SelectedFriendItem = ({ friend, onDeselect }) => {
   return (
     <div
+      className={ modalItem.mini }
       onClick={() => onDeselect(friend.id)}
-      style={{
-        cursor: 'pointer',
-        backgroundColor: '#111111',
-        padding: '5px',
-        border: '1px solid #ccc',
-        marginBottom: '5px',
-      }}
     >
       <p>{friend.name}</p>
     </div>

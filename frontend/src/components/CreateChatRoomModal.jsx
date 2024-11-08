@@ -55,8 +55,14 @@ const CreateChatRoomModal = ({ isOpen, onClose, onCreate }) => {
   };
 
   return (
-    <div className={modalOverlay}>
-      <section className={modalContainer}>
+    <div
+      className={modalOverlay}
+      onClick={onClose}
+    >
+      <section
+        className={modalContainer}
+        onClick={(e) => e.stopPropagation()}
+      >
         <h2 className={modalHeader}>채팅방 생성</h2>
         <input 
           type="text"
@@ -65,7 +71,7 @@ const CreateChatRoomModal = ({ isOpen, onClose, onCreate }) => {
           placeholder='채팅방 이름을 입력하세요'
         />
         <div className={modalContent}>
-          <h3>친구 선택 {selectedFriends.length > 0 && selectedFriends.length}</h3>
+          <h4>친구 선택 {selectedFriends.length > 0 && selectedFriends.length}</h4>
           <div>
             {selectedFriends.length > 0 && (
               <>
