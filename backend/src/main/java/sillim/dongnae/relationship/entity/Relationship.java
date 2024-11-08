@@ -1,26 +1,30 @@
 package sillim.dongnae.relationship.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import sillim.dongnae.member.entity.Member;
 
 @Getter
+@Entity
+@NoArgsConstructor
 public class Relationship {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long followerId;
-    private Long followingId;
-    private boolean approve;
 
-    public Relationship(Long followerId, Long followingId, boolean approve) {
-        this.followerId = followerId;
-        this.followingId = followingId;
-        this.approve = approve;
+    @ManyToOne
+    @JoinColumn(name = "friend_id")
+    private Member followingMember;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member followerMember;
+
+    public Relationship(Member followerMember, Member followingMember) {
+        this.followerMember = followerMember;
+        this.followingMember = followingMember;
     }
 
-    public void setRelationshipId(Long relationshipId) {
-        this.id = relationshipId;
-    }
-
-    public void approve() {
-        this.approve = true;
-    }
 }

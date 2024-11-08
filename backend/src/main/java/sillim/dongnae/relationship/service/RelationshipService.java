@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface RelationshipService {
 
-    boolean addRelationship(Long followerId, Long followingId);
+    boolean follow(Long followerId, Long followingId);
 
     List<FollowingResponse> getFollowing(Long memberId);
 

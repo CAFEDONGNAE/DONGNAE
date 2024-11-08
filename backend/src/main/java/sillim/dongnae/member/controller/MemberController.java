@@ -28,7 +28,7 @@ public class MemberController {
     public ResponseEntity<String> checkEmail(@RequestBody EmailCheckRequest request) {
 
         boolean result = memberService.checkEmailDuplication(request.getEmail());
-        if (!result) {
+        if (result) {
             return new ResponseEntity<>("존재하는 이메일입니다.", HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>("사용 가능한 이메일입니다.", HttpStatus.OK);
@@ -90,8 +90,15 @@ public class MemberController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MemberProfileResponse>> searchMembers(@RequestParam String name) {
-        return new ResponseEntity<>(memberService.searchMembers(name), HttpStatus.OK);
+    public ResponseEntity<List<MemberProfileResponse>> searchMembers(
+            @RequestParam String name,
+            HttpServletRequest servletRequest
+    ) {
+
+        HttpSession session = servletRequest.getSession(false);
+        Long memberId = (Long) session.getAttribute("memberId");
+
+        return new ResponseEntity<>(memberService.searchMembers(name, memberId), HttpStatus.OK);
     }
 
     @PostMapping("/logout")
@@ -106,7 +113,7 @@ public class MemberController {
         cookie.setMaxAge(0); // 쿠키 즉시 삭제
         response.addCookie(cookie);
 
-        return new ResponseEntity <> ("로그아웃 완료!",HttpStatus.OK );
+        return new ResponseEntity<>("로그아웃 완료!", HttpStatus.OK);
     }
 
 }

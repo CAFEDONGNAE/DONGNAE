@@ -2,6 +2,7 @@ package sillim.dongnae.relationship.dto.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import sillim.dongnae.member.entity.Member;
 
 @Getter
 @NoArgsConstructor
@@ -11,10 +12,10 @@ public class FollowingResponse {
     private String email;
     private String name;
 
-    public FollowingResponse(Long id, String email, String nickname) {
-        this.id = id;
-        this.email = email;
-        this.name = nickname;
+    public FollowingResponse(Member member) {
+        this.id = member.getId();
+        this.email = member.getEmail();
+        this.name = member.getNickName();
     }
 
 }
