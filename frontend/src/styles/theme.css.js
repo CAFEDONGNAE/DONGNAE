@@ -3,26 +3,59 @@ import { createTheme, createThemeContract, globalStyle } from '@vanilla-extract/
 // 테마 변수 계약 생성
 export const themeVars = createThemeContract({
   color: {
-    focus: null,
-    background: null,
-    text: null,
+    brand: null,
+    text: {
+      default: null,
+      opposite: null,
+      focus: null,
+      disabled: null,
+    },
+    background: {
+      header: null,
+      body: null,
+      input: null,
+      button: null,
+      buttonDisabled: null,
+    },
   },
 });
 
 // 라이트 테마 및 다크 테마 정의
 export const lightThemeClass = createTheme(themeVars, {
   color: {
-    focus: '#003adb',
-    background: '#ffffff',
-    text: '#111111',
+    brand: '#8fecff',
+    text: {
+      default: '#111111',
+      opposite: '#ffffff',
+      focus: '#003adb',
+      disabled: '#aaaaaa',
+    },
+    background: {
+      header: '#ffffff',
+      body: '#ffffff',
+      input: '#eeeeee',
+      button: '#222222',
+      buttonDisabled: '#dddddd',
+    },
   },
 });
 
 export const darkThemeClass = createTheme(themeVars, {
   color: {
-    focus: '#003adb',
-    background: '#111111',
-    text: '#ffffff',
+    brand: '#8fecff',
+    text: {
+      default: '#ffffff',
+      opposite: '#111111',
+      focus: '#003adb',
+      disabled: '#aaaaaa',
+    },
+    background: {
+      header: '#111111',
+      body: '#111111',
+      input: '#555555',
+      button: '#ffffff',
+      buttonDisabled: '#444444',
+    },
   },
 });
 
@@ -32,7 +65,7 @@ globalStyle('html, body', {
   padding: 8,
   height: '100%',
   fontFamily: 'Pretendard, sans-serif',
-  backgroundColor: themeVars.color.background,
-  color: themeVars.color.text,
+  backgroundColor: themeVars.color.background.body,
+  color: themeVars.color.text.default,
   boxSizing: 'border-box',
 });

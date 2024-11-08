@@ -73,6 +73,8 @@ export const checkEmailApi = async (email) => {
   try {
     const response = await api.post('/members/check-email', { email });
 
+    console.log('요청보냄');
+
     if (response.status === 200) {
       // 이메일 사용 가능
       return { success: true, message: '사용 가능한 이메일입니다.' };

@@ -1,14 +1,16 @@
-// src/App.jsx
+import { useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AppRoutes from './routes/AppRoutes';
 import NavigationBar from './components/NavigationBar';
-import './styles/global.css';
-import { lightThemeClass, darkThemeClass } from './styles/theme.css';
-import { useEffect } from 'react';
 import useThemeStore from './store/themeStore';
 import useSystemTheme from './utils/useSystemTheme';
+import { lightThemeClass, darkThemeClass } from './styles/theme.css';
+import './styles/global.css';
 
 const App = () =>  {
+  const queryClient = new QueryClient();
+
   const theme = useThemeStore((state) => state.theme);
   const setTheme = useThemeStore((state) => state.setTheme);
   const systemTheme = useSystemTheme();
@@ -31,10 +33,12 @@ const App = () =>  {
   }, [appliedThemeClass]);
 
   return (
+    <QueryClientProvider client={queryClient}>
       <Router>
         <NavigationBar />
         <AppRoutes />
       </Router>
+    </QueryClientProvider>
   );
 };
 
