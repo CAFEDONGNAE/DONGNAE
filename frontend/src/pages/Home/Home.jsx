@@ -13,7 +13,7 @@ const Home = () => {
   const createChatRoom = (chatRoomData) => {
     navigate(`/chatroom/${chatRoomData.roomId}`);
     closeCreateChatRoomModal();
-  }
+  };
 
   return (
     <>
