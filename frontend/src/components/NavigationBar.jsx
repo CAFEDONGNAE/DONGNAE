@@ -41,6 +41,9 @@ const NavigationBar = () => {
               { !isProfile && <Link to="/profile">내 정보보기</Link> }
             </div>
             <div>
+              <Link to="/chatroom">채팅</Link>
+            </div>
+            <div>
               <LogoutButton />
             </div>
           </div>
