@@ -8,6 +8,9 @@ export default defineConfig({
     react(),
     vanillaExtractPlugin()
   ],
+  define: {
+    global: 'window'
+  },
   // server: {
   //   proxy: {
   //     '/members': { // 요청 경로가 '/members'로 시작하는 경우 프록시 적용
