@@ -3,14 +3,15 @@ import useAuthStore from '../../store/authStore';
 import UserFinder from '../../components/UserFinder';
 import CreateChatRoomModal from '../../components/CreateChatRoomModal';
 import useModalStore from '../../store/modalStore';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const { isCreateChatRoomModalOpen, openCreateChatRoomModal, closeCreateChatRoomModal } = useModalStore();
+  const navigate = useNavigate();
 
-  const createChatRoom = (roomName, selectedFriends) => {
-    console.log(`채팅방 생성: ${roomName}`);
-    console.log(`채팅방 참여자: ${selectedFriends}`)
+  const createChatRoom = (chatRoomData) => {
+    navigate(`/chatroom/${chatRoomData.roomId}`);
     closeCreateChatRoomModal();
   }
 

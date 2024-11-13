@@ -1,9 +1,9 @@
 import api from './api';
 
-export const createChatRoom = async (memberId, roomName) => {
+export const createChatRoom = async (memberIds, roomName) => {
   try {
-    const response = await api.post('/chatrooms', {
-      memberId,
+    const response = await api.post('/chatroom/create', {
+      memberIds,
       roomName
     });
 
