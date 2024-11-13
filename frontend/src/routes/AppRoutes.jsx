@@ -4,6 +4,7 @@ import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
 import Profile from '../pages/Profile/Profile';
 import AuthRoutes from './AuthRoutes';
+import ChatRoom from '../pages/Chat/ChatRoom';
 
 const AppRoutes = () => {
   return (
@@ -11,6 +12,7 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/" element={<Home />} />
+      <Route path="/chatroom/:roomName" element={<ChatRoom />} />
 
       <Route path="/profile" element={<AuthRoutes element={<Profile />} />} />
     </Routes>

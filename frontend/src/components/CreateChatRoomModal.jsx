@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SelectFriendList from './SelectFriendList';
 import SelectedFriendItem from './SelectedFriendItem';
-// import { createChatRoom } from '../services/chatService';
+import { createChatRoom } from '../services/chatService';
 import { modalOverlay, modalContainer, modalHeader, modalContent, modalActions } from '../styles/modal.css';
 
 const CreateChatRoomModal = ({ isOpen, onClose, onCreate }) => {
@@ -23,19 +23,17 @@ const CreateChatRoomModal = ({ isOpen, onClose, onCreate }) => {
 
   const handleCreate = async () => {
     if (roomName.trim() && selectedFriends.length > 0) {
-      const memberId = selectedFriends.map(friend => friend.id);
-      // const createResult = await createChatRoom(memberId, roomName);
+      const memberIds = selectedFriends.map(friend => friend.id);
+      const createResult = await createChatRoom(memberIds, roomName);
       
-      // if (createResult) {
-      //   setRoomName('');
-      //   setSelectedFriends([]);
-      //   onClose();
-      // } else {
-      //   alert('채팅방 생성 실패');
-      // }
-      onCreate(roomName, memberId);
-      setRoomName('');
-      setSelectedFriends([]);
+      if (createResult) {
+        setRoomName('');
+        setSelectedFriends([]);
+        onCreate(createResult.data);
+        onClose();
+      } else {
+        alert('채팅방 생성 실패');
+      }
       onClose();
     }
   };
