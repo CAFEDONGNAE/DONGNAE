@@ -20,8 +20,9 @@ public class ChatRoomController {
 
 
     @PostMapping("/create")
-    public ChatRoomInfoResponse createChatRoom(@RequestBody ChatRoomRequest chatRoomRequest) {
-        return chatRoomService.createChatRoom(chatRoomRequest.getRoomName(), chatRoomRequest.getMemberIds());
+    public ResponseEntity<ChatRoomInfoResponse> createChatRoom(@RequestBody ChatRoomRequest chatRoomRequest) {
+        return new ResponseEntity<>(chatRoomService
+                .createChatRoom(chatRoomRequest.getRoomName(), chatRoomRequest.getMemberIds()), HttpStatus.CREATED);
     }
 
     // 기존 채팅방에 새로운 멤버를 추가
@@ -46,7 +47,7 @@ public class ChatRoomController {
 
         Long memberId = (Long) session.getAttribute("memberId");
 
-        return null;
+        return new ResponseEntity<>(chatRoomService.getChatRoomList(memberId), HttpStatus.OK);
     }
 
 }
