@@ -13,7 +13,7 @@ const useAuthStore = create(
     }),
     {
       name: 'auth-storage',
-      partialize: (state) => ({ isLoggedIn: state.isLoggedIn, userName: state.userName }),
+      partialize: (state) => ({ isLoggedIn: state.isLoggedIn, userName: state.userName, userId: state.userId }),
       storage: {
         getItem: (name) => {
           const value = sessionStorage.getItem(name);

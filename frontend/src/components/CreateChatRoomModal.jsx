@@ -4,11 +4,13 @@ import SelectFriendList from './SelectFriendList';
 import SelectedFriendItem from './SelectedFriendItem';
 import { createChatRoom } from '../services/chatService';
 import { modalOverlay, modalContainer, modalHeader, modalContent, modalActions } from '../styles/modal.css';
+import useAuthStore from '../store/authStore';
 
 const CreateChatRoomModal = ({ isOpen, onClose, onCreate }) => {
   const [roomName, setRoomName] = useState('');
   const [selectedFriends, setSelectedFriends] = useState([]);
   const [isCustomName, setIsCustomName] = useState(false);
+  const userId = useAuthStore.getState().userId;
 
   useEffect(() => {
     if (selectedFriends.length > 0 && !isCustomName) {
@@ -24,6 +26,7 @@ const CreateChatRoomModal = ({ isOpen, onClose, onCreate }) => {
   const handleCreate = async () => {
     if (roomName.trim() && selectedFriends.length > 0) {
       const memberIds = selectedFriends.map(friend => friend.id);
+      memberIds.push(userId);
       const createResult = await createChatRoom(memberIds, roomName);
       
       if (createResult) {
