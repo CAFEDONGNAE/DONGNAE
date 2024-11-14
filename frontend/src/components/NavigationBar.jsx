@@ -23,9 +23,13 @@ const NavigationBar = () => {
   return (
     <section
       style={{
+        position: 'fixed',
         display: 'flex',
         justifyContent: 'space-between',
         alignContent: 'center',
+        width: '100%',
+        top: 0,
+        left: 0,
       }}
     >
       <h3 onClick={goHome} style={{cursor: 'pointer'}}>카페동네</h3>

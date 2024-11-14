@@ -1,11 +1,13 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import useAuthStore from '../store/authStore';
 
 const useChat = (roomId) => {
+  const [messages, setMessages] = useState([]);
   const stompClient = useRef(null);
   const userId = useAuthStore.getState().userId;
+  const userName = useAuthStore.getState().userName;
   const reconnectDelay = 5000; // 재연결 시도 지연 시간
 
   const connect = useCallback(() => {
@@ -19,8 +21,9 @@ const useChat = (roomId) => {
       if (stompClient.current && stompClient.current.connected) {
         stompClient.current.subscribe(`/topic/${roomId}`, (message) => {
           const receivedMessage = JSON.parse(message.body);
-          console.log('Received message:', receivedMessage);
-          // 메세지를 상태에 추가하는 로직 작성
+          
+          // 새로운 메세지를 상태에 추가
+          setMessages((prevMessages) => [...prevMessages, receivedMessage]);
         });
       }
     },
@@ -55,7 +58,8 @@ const useChat = (roomId) => {
         {},
         JSON.stringify({
           content,
-          writer: userId
+          writer: userName,
+          writerId: userId
         })
       );
     } else {
@@ -63,7 +67,7 @@ const useChat = (roomId) => {
     }
   };
 
-  return { sendMessage };
+  return { messages, sendMessage };
 };
 
 export default useChat;
