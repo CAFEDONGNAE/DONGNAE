@@ -6,10 +6,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sillim.dongnae.chat.dto.ChatMessageDto;
 import sillim.dongnae.chat.dto.request.ChatRoomAddMemberRequest;
-import sillim.dongnae.chat.dto.response.ChatRoomInfoResponse;
 import sillim.dongnae.chat.dto.request.ChatRoomRequest;
+import sillim.dongnae.chat.dto.response.ChatRoomInfoResponse;
+import sillim.dongnae.chat.service.ChatMessageService;
 import sillim.dongnae.chat.service.ChatRoomService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,7 +21,7 @@ import sillim.dongnae.chat.service.ChatRoomService;
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
-
+    private final ChatMessageService chatMessageService;
 
     @PostMapping("/create")
     public ResponseEntity<ChatRoomInfoResponse> createChatRoom(@RequestBody ChatRoomRequest chatRoomRequest) {
@@ -50,4 +54,9 @@ public class ChatRoomController {
         return new ResponseEntity<>(chatRoomService.getChatRoomList(memberId), HttpStatus.OK);
     }
 
+    @GetMapping("/{roomId}/messages")
+    public List<ChatMessageDto> getMessages(@PathVariable Long roomId) {
+
+        return chatMessageService.getMessages(roomId);
+    }
 }
