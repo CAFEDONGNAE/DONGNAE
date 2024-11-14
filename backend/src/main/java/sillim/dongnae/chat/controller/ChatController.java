@@ -11,7 +11,7 @@ public class ChatController {
 
     @MessageMapping("/chat/{roomId}/sendMessage")
     @SendTo("/topic/{roomId}")
-    public ChatMessage sendMessage(@DestinationVariable Long roomId, ChatMessage chatMessage) {
+    public ChatMessage sendMessage(@DestinationVariable String roomId, ChatMessage chatMessage) {
 
         // 메세지 처리 로직 추가 (ex. 채팅 저장)
 
