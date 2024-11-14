@@ -14,7 +14,7 @@ const AppRoutes = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/" element={<Home />} />
       {/* AuthRoutes */}
-      <Route path="/chatroom/:roomName" element={<AuthRoutes element={<Chat />} />} />
+      <Route path="/chatroom/:roomId" element={<AuthRoutes element={<Chat />} />} />
       <Route path="/chatroom" element={<AuthRoutes element={<ChatRoom />} />} />
       <Route path="/profile" element={<AuthRoutes element={<Profile />} />} />
     </Routes>
