@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import useAuthStore from '../store/authStore';
+import { fetchChatRecords } from '../services/chatService';
 
 const useChat = (roomId) => {
   const [messages, setMessages] = useState([]);
@@ -14,8 +15,18 @@ const useChat = (roomId) => {
     const socket = new SockJS('http://localhost:8080/chat');
     stompClient.current = Stomp.over(socket);
 
-    stompClient.current.connect({}, () => {
+    stompClient.current.connect({}, async () => {
       console.log('Connected to Websocket');
+
+      // 이전 채팅 내역 가져오기
+      try {
+        const { success, data } = await fetchChatRecords(roomId);
+        if (success) {
+          setMessages(data);
+        }
+      } catch (error) {
+        console.error('채팅 내역 불러오기 실패', error);
+      }
 
       // 연결이 완료된 후에만 구독 실행
       if (stompClient.current && stompClient.current.connected) {

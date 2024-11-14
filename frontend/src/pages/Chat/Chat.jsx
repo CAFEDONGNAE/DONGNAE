@@ -8,8 +8,8 @@ const Chat = () => {
   const { roomId } = useParams();
   const { messages, sendMessage } = useChat(roomId);
   const [message, setMessage] = useState('');
-  // const userId = useAuthStore.getState().userId;
-  const userName = useAuthStore.getState().userName;
+  const userId = useAuthStore.getState().userId;
+  // const userName = useAuthStore.getState().userName;
   const chatEndRef = useRef(null);
 
   useEffect(() => {
@@ -40,10 +40,10 @@ const Chat = () => {
         }}
       >
         {messages.map((msg, index) => (
-          <div  key={index} className={msg.writer === userName ? chatContainer.my : chatContainer.others}>
-            {msg.writer !== userName && index === 0 && (<p>{msg.writer}</p>)}
-            {msg.writer !== userName && index !== 0 && messages[index - 1].writer !== msg.writer && (<p>{msg.writer}</p>)}
-            <div className={msg.writer === userName ? chatItem.my : chatItem.others}>
+          <div  key={index} className={msg.writerId === userId ? chatContainer.my : chatContainer.others}>
+            {msg.writerId !== userId && index === 0 && (<p>{msg.writer}</p>)}
+            {msg.writerId !== userId && index !== 0 && messages[index - 1].writerId !== msg.writerId && (<p>{msg.writer}</p>)}
+            <div className={msg.writerId === userId ? chatItem.my : chatItem.others}>
               <span>{msg.content}</span>
             </div>
           </div>
