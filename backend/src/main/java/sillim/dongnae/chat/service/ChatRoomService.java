@@ -3,7 +3,6 @@ package sillim.dongnae.chat.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import sillim.dongnae.chat.dto.response.ChatRoomInfoResponse;
 import sillim.dongnae.chat.entity.ChatRoom;
 import sillim.dongnae.chat.entity.ChatRoomParticipant;
@@ -21,7 +20,6 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomParticipantRepository chatRoomParticipantRepository;
     private final MemberJpaRepository memberJpaRepository;
-
 
     // 채팅방을 생성
     @Transactional
@@ -66,7 +64,5 @@ public class ChatRoomService {
                 .stream()
                 .map(participantInfo -> new ChatRoomInfoResponse(participantInfo.getChatRoom()))
                 .toList();
-
     }
-
 }
