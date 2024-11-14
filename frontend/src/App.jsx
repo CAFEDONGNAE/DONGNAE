@@ -36,7 +36,9 @@ const App = () =>  {
     <QueryClientProvider client={queryClient}>
       <Router>
         <NavigationBar />
-        <AppRoutes />
+        <section style={{marginTop: '2.5rem'}}>
+          <AppRoutes />
+        </section>
       </Router>
     </QueryClientProvider>
   );
