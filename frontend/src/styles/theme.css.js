@@ -13,6 +13,8 @@ export const themeVars = createThemeContract({
     background: {
       header: null,
       body: null,
+      card: null,
+      cardOpposite: null,
       input: null,
       button: null,
       buttonDisabled: null,
@@ -33,6 +35,8 @@ export const lightThemeClass = createTheme(themeVars, {
     background: {
       header: '#ffffff',
       body: '#ffffff',
+      card: '#ffffff',
+      cardOpposite: '#ffffff',
       input: '#eeeeee',
       button: '#222222',
       buttonDisabled: '#dddddd',
@@ -52,7 +56,9 @@ export const darkThemeClass = createTheme(themeVars, {
     background: {
       header: '#111111',
       body: '#111111',
-      input: '#555555',
+      card: '#444444',
+      cardOpposite: '#eeeeee',
+      input: '#777777',
       button: '#ffffff',
       buttonDisabled: '#444444',
     },
